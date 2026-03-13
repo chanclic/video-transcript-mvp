@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Video Transcript</title>
+    <link rel="stylesheet" href="popup.css" />
+  </head>
+  <body>
+    <main class="container">
+      <h1>Video Transcript</h1>
+
+      <label>
+        API Base
+        <input id="apiBase" type="text" value="http://127.0.0.1:8000" />
+      </label>
+
+      <label>
+        Video URL
+        <input id="videoUrl" type="text" placeholder="https://..." />
+      </label>
+
+      <label>
+        Language (optional)
+        <input id="language" type="text" placeholder="zh / en / zh-Hans" />
+      </label>
+
+      <label class="checkbox-row">
+        <input id="fallbackTranscribe" type="checkbox" />
+        <span>Subtitle not available -> use local Whisper fallback</span>
+      </label>
+
+      <div class="actions">
+        <button id="runBtn" type="button">Generate Transcript</button>
+      </div>
+
+      <p id="status" class="status">Ready</p>
+
+      <label>
+        Transcript
+        <textarea id="resultText" rows="9" readonly></textarea>
+      </label>
+
+      <div class="actions two">
+        <button id="downloadTxt" type="button" disabled>Download TXT</button>
+        <button id="downloadSrt" type="button" disabled>Download SRT</button>
+      </div>
+    </main>
+
+    <script src="popup.js"></script>
+  </body>
+</html>

@@ -1,0 +1,15 @@
+{
+  "manifest_version": 3,
+  "name": "Video Transcript MVP",
+  "version": "0.1.0",
+  "description": "Convert video pages into transcript text via local FastAPI backend.",
+  "permissions": ["tabs", "activeTab", "storage"],
+  "host_permissions": [
+    "http://127.0.0.1:8000/*",
+    "http://localhost:8000/*"
+  ],
+  "action": {
+    "default_title": "Video Transcript",
+    "default_popup": "popup.html"
+  }
+}

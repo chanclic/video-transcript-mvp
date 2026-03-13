@@ -1,0 +1,6 @@
+__pycache__/
+*.pyc
+backend/.venv/
+backend/.venv_test/
+subtitles/
+*.log
