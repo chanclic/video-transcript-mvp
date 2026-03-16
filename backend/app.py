@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import os
 import re
+import shutil
 import subprocess
 import tempfile
 from pathlib import Path
@@ -187,6 +188,25 @@ def _extract_video_info(url: str) -> Dict[str, Any]:
     return parsed
 
 
+def _resolve_ffmpeg_location() -> Optional[str]:
+    ffmpeg = shutil.which("ffmpeg")
+    ffprobe = shutil.which("ffprobe")
+    if ffmpeg and ffprobe:
+        return str(Path(ffmpeg).parent)
+
+    candidates = [
+        Path("/Users/claire/.homebrew/bin"),
+        Path("/opt/homebrew/bin"),
+        Path("/usr/local/bin"),
+        Path("/usr/bin"),
+    ]
+    for candidate in candidates:
+        if (candidate / "ffmpeg").exists() and (candidate / "ffprobe").exists():
+            return str(candidate)
+
+    return None
+
+
 def _try_subtitle_path(url: str, language: Optional[str]) -> Tuple[str, List[TranscriptChunk], str]:
     with tempfile.TemporaryDirectory(prefix="video_subs_") as tmp:
         tmpdir = Path(tmp)
@@ -206,6 +226,9 @@ def _try_subtitle_path(url: str, language: Optional[str]) -> Tuple[str, List[Tra
             out_template,
             url,
         ]
+        ffmpeg_location = _resolve_ffmpeg_location()
+        if ffmpeg_location:
+            cmd.extend(["--ffmpeg-location", ffmpeg_location])
         _run(cmd)
 
         files = list(tmpdir.glob("*.srt")) + list(tmpdir.glob("*.vtt"))
@@ -262,6 +285,9 @@ def _try_whisper_path(url: str, language: Optional[str]) -> Tuple[List[Transcrip
             out_template,
             url,
         ]
+        ffmpeg_location = _resolve_ffmpeg_location()
+        if ffmpeg_location:
+            cmd.extend(["--ffmpeg-location", ffmpeg_location])
         _run(cmd)
 
         audio_files = list(tmpdir.glob("audio.*"))
