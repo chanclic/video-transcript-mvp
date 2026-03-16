@@ -55,13 +55,13 @@ source .venv/bin/activate
 pip install -r requirements.txt
 # Optional whisper fallback
 pip install -r requirements-whisper.txt
-uvicorn app:app --reload --host 127.0.0.1 --port 8000
+uvicorn app:app --reload --host 127.0.0.1 --port 8001
 ```
 
 Health check:
 
 ```bash
-curl -s http://127.0.0.1:8000/health
+curl -s http://127.0.0.1:8001/health
 ```
 
 ### 2. Load extension in Chrome
@@ -75,7 +75,7 @@ curl -s http://127.0.0.1:8000/health
 
 1. Open a supported video page.
 2. Click the extension icon.
-3. Keep `API Base` as `http://127.0.0.1:8000`.
+3. Keep `API Base` as `http://127.0.0.1:8001`.
 4. Click `Generate Transcript`.
 5. Download `.txt` or `.srt`.
 
@@ -86,7 +86,7 @@ curl -s http://127.0.0.1:8000/health
 Request example:
 
 ```bash
-curl -sS -X POST 'http://127.0.0.1:8000/api/transcript' \
+curl -sS -X POST 'http://127.0.0.1:8001/api/transcript' \
   -H 'content-type: application/json' \
   -d '{"url":"https://www.bilibili.com/video/BV1xx411c7mD","language":"zh","fallback_transcribe":false}'
 ```

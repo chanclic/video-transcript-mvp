@@ -24,7 +24,7 @@ Make sure backend is running:
 ```bash
 cd /Users/claire/codex/video-transcript-mvp/backend
 source .venv/bin/activate
-uvicorn app:app --reload --host 127.0.0.1 --port 8000
+uvicorn app:app --reload --host 127.0.0.1 --port 8001
 ```
 
 ## 4) Whisper model download is slow
